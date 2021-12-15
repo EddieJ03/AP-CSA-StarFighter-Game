@@ -57,7 +57,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     t.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        alienShots.add(new Ammo(horde.getList().get((int)(Math.random() * horde.getList().size())).getX() + horde.getList().get((int)(Math.random() * horde.getList().size())).getWidth() / 2, horde.getList().get((int)(Math.random() * horde.getList().size())).getY() ) );
+        alienShots.add(new AlienAmmo(horde.getList().get((int)(Math.random() * horde.getList().size())).getX() + horde.getList().get((int)(Math.random() * horde.getList().size())).getWidth() / 2, horde.getList().get((int)(Math.random() * horde.getList().size())).getY() ) );
       }
     }, 0, (int)((Math.random() * 3) + 1 * 1000));
 
@@ -70,9 +70,9 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 
   public void update(Graphics window)
   {
-        if(ship.getLost() == false) {
-          paint(window);
-        }
+      if(ship.getLost() == false) {
+        paint(window);
+      }
   }
 
   public void paint( Graphics window )
@@ -160,7 +160,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     }
 
     List<Ammo> removeBul = new ArrayList<Ammo>();
-    for(Ammo a : alienShots.getList()){
+    for(Ammo a : alienShots.getList()) {
             if( (a.getX() > ship.getX() && a.getX() < ship.getX() + ship.getWidth()) && (ship.didCollideTop(a))){
               lives -= 1;
               System.out.println("Collision Detected: An Alien Ammo Hit Your Ship!");
@@ -179,7 +179,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     }
     alienShots.getList().removeAll(removeBul);
     
-    if(horde.getList().size() == 0){
+    if(horde.getList().size() == 0) {
         graphToBack.setColor(Color.BLACK);
             graphToBack.fillRect(0, 0, 800, 600);
             horde = new AlienHorde(hordeSize++);
