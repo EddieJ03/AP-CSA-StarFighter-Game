@@ -7,8 +7,8 @@ public class StarFighter extends JFrame
   private static final int HEIGHT = 550;
 
   public StarFighter()
-  {
-    super("STARFIGHTER");
+  {                
+    super("SPACEINVADERS");
     setSize(WIDTH,HEIGHT);
 
     OuterSpace theGame = new OuterSpace();
@@ -19,7 +19,7 @@ public class StarFighter extends JFrame
     setVisible(true);
   }
 
-  public static void main( String args[] )
+  public static void main(String args[])
   {
     StarFighter run = new StarFighter();
   }
