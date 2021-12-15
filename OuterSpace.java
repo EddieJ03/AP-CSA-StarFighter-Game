@@ -13,9 +13,6 @@ import java.util.*;
 public class OuterSpace extends Canvas implements KeyListener, Runnable
 {
   private Ship ship;
-  //private Alien alienOne;
-  //private Alien alienTwo;
-
 
   private AlienHorde horde;
   private Bullets shots;
@@ -50,15 +47,14 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 
     alienShots = new Bullets();
 
-    Timer t = new Timer();
+    t = new Timer();
 
     t.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        alienShots.add( new Ammo( horde.getList().get((int)(Math.random() * horde.getList().size())).getX() + horde.getList().get((int)(Math.random() * horde.getList().size())).getWidth() / 2, horde.getList().get((int)(Math.random() * horde.getList().size())).getY() ) );
+        alienShots.add(new Ammo(horde.getList().get((int)(Math.random() * horde.getList().size())).getX() + horde.getList().get((int)(Math.random() * horde.getList().size())).getWidth() / 2, horde.getList().get((int)(Math.random() * horde.getList().size())).getY() ) );
       }
     }, 0, (int)((Math.random() * 5) + 1) * 1000);
-
 
 
     this.addKeyListener(this);
@@ -70,7 +66,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
   public void update(Graphics window)
   {
         if(ship.getLost() == false) {
-            paint(window);
+          paint(window);
         }
   }
 
@@ -79,13 +75,13 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     //set up the double buffering to make the game animation nice and smooth
     Graphics2D twoDGraph = (Graphics2D)window;
 
-    // take a snap shop of the current screen and save it as an image
-    // that is the exact same width and height as the current screen
+    //take a snap shop of the current screen and same it as an image
+    //that is the exact same width and height as the current screen
     if(back==null)
       back = (BufferedImage)( createImage(getWidth(), getHeight()) );
 
-    // create a graphics reference to the back ground image
-    // we will draw all changes on the background image
+    //create a graphics reference to the back ground image
+    //we will draw all changes on the background image
     Graphics graphToBack = back.createGraphics();
 
     graphToBack.setColor(Color.BLACK);
@@ -147,8 +143,10 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
                   graphToBack.setColor(Color.BLACK);
                   graphToBack.fillRect(0, 0, 800, 600);
                   graphToBack.setColor(Color.RED);
-                  graphToBack.drawString("GAME OVER: YOU LOST ", 300, 300);
+                  graphToBack.drawString("GAME OVER: YOU LOST ", 275, 350);
                   ship.setLost(true);
+                  t.cancel();
+                  t.purge();
                 }
         }
     }
@@ -164,15 +162,14 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
                   graphToBack.setColor(Color.RED);
                   graphToBack.drawString("GAME OVER: YOU LOST ", 300, 300);
                   ship.setLost(true);
+                  t.cancel();
+                  t.purge();
+                 
               }
               removeBul.add(a);
             }
     }
     alienShots.getList().removeAll(removeBul);
-
-    // for(Alien al : horde.getList()){
-    //   al.reset();
-    // }   
     
     if(horde.getList().size() == 0){
         graphToBack.setColor(Color.BLACK);
@@ -180,6 +177,8 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
             graphToBack.setColor(Color.RED);
             graphToBack.drawString("GAME OVER: YOU WIN! ", 300,300);
             ship.setLost(true);
+            t.cancel();
+            t.purge(); 
     }
 
 
