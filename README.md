@@ -1,6 +1,6 @@
-# Starfighter Lab
+# Space Invaders
 
 ## Description
-StarFighter game in Java
+Space Invaders game in Java
 
 
