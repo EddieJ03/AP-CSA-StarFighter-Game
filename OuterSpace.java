@@ -13,7 +13,7 @@ import java.util.*;
 public class OuterSpace extends Canvas implements KeyListener, Runnable
 {
   private Ship ship;
-
+  private int hordeSize;
   private AlienHorde horde;
   private Bullets shots;
   private Bullets alienShots;
@@ -38,6 +38,8 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     score = 0;
     lives = 3;
 
+    hordeSize = 16;
+
     //instantiate other instance variables
     //Ship, Alien
     ship = new Ship(400, 450);
@@ -57,7 +59,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
       public void run() {
         alienShots.add(new Ammo(horde.getList().get((int)(Math.random() * horde.getList().size())).getX() + horde.getList().get((int)(Math.random() * horde.getList().size())).getWidth() / 2, horde.getList().get((int)(Math.random() * horde.getList().size())).getY() ) );
       }
-    }, 0, (int)((Math.random() * 5) + 1) * 1000);
+    }, 0, (int)((Math.random() * 3) + 1 * 1000));
 
 
     this.addKeyListener(this);
@@ -90,7 +92,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     graphToBack.setColor(Color.BLACK);
     graphToBack.fillRect(0,0,800,600);
     graphToBack.setColor(Color.BLUE);
-    graphToBack.drawString("StarFighter Score: " + score, 25, 50 );
+    graphToBack.drawString("StarFighter Score: " + score, 30, 50 );
     graphToBack.setColor(Color.RED);
     graphToBack.drawString("StarFighter Lives: " + lives, 25, 500 );
     
@@ -148,7 +150,8 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
                   graphToBack.setColor(Color.BLACK);
                   graphToBack.fillRect(0, 0, 800, 600);
                   graphToBack.setColor(Color.RED);
-                  graphToBack.drawString("GAME OVER: YOU LOST ", 275, 350);
+                  graphToBack.drawString("GAME OVER: YOU LOST ", 325, 275);
+                  graphToBack.drawString("Score: " + score, 325, 300);
                   ship.setLost(true);
                   t.cancel();
                   t.purge();
@@ -165,11 +168,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
                   graphToBack.setColor(Color.BLACK);
                   graphToBack.fillRect(0, 0, 800, 600);
                   graphToBack.setColor(Color.RED);
-                  graphToBack.drawString("GAME OVER: YOU LOST ", 300, 300);
+                  graphToBack.drawString("GAME OVER: YOU LOST ", 325, 275);
+                  graphToBack.drawString("Score: " + score, 325, 300);
                   ship.setLost(true);
                   t.cancel();
                   t.purge();
-                 
               }
               removeBul.add(a);
             }
@@ -178,14 +181,10 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     
     if(horde.getList().size() == 0){
         graphToBack.setColor(Color.BLACK);
-            graphToBack.fillRect(0, 0, 800, 600);                
-            graphToBack.setColor(Color.RED);
-            graphToBack.drawString("GAME OVER: YOU WIN! ", 300,300);
-            ship.setLost(true);
-            t.cancel();
-            t.purge(); 
+            graphToBack.fillRect(0, 0, 800, 600);
+            horde = new AlienHorde(hordeSize++);
+            lives += 1;
     }
-
 
     twoDGraph.drawImage(back, null, 0, 0);
   }
@@ -201,14 +200,6 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     if (e.getKeyCode() == KeyEvent.VK_RIGHT)
     {
       keys[1] = true;
-    }
-    if (e.getKeyCode() == KeyEvent.VK_UP)
-    {
-      keys[2] = true;
-    }
-    if (e.getKeyCode() == KeyEvent.VK_DOWN)
-    {
-      keys[3] = true;
     }
     if (e.getKeyCode() == KeyEvent.VK_SPACE)
     {
