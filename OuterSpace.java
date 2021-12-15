@@ -18,6 +18,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
   private Bullets shots;
   private Bullets alienShots;
 
+  boolean spaceReleased;
 
   private int score, lives;
 
@@ -28,6 +29,8 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 
   public OuterSpace()
   {
+    spaceReleased = true;
+
     setBackground(Color.black);
 
     keys = new boolean[5];
@@ -114,9 +117,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     }
     if(keys[4] == true) {
 
-      shots.add(new Ammo(ship.getX()+ship.getWidth()/2, ship.getY()));
-      
+      if(spaceReleased) {
+        shots.add(new Ammo(ship.getX()+ship.getWidth()/2, ship.getY()));
+      }
 
+      spaceReleased = false;
       keys[4] = false;
 
     }
@@ -232,6 +237,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
     }
     if (e.getKeyCode() == KeyEvent.VK_SPACE)
     {
+      spaceReleased = true;
       keys[4] = false;
     }
     repaint();
